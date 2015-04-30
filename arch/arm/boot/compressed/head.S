@@ -138,7 +138,6 @@ start:
 		.word	_edata			@ zImage end address
  THUMB(		.thumb			)
 1:		mov	r7, r1			@ save architecture ID
-		mov	r8, r2			@ save atags pointer
 		teq	r0, #0			@ Check for kexec_boot_atags.
 		movne	r8, r0			@ Save kexec_boot_tags.
 		moveq	r8, r2			@ save atags pointer
