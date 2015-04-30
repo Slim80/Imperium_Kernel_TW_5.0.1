@@ -845,7 +845,7 @@ CONFIG_WTL_ENCRYPTION_FILTER=y
 CONFIG_KEYS=y
 CONFIG_KEYS_DEBUG_PROC_KEYS=y
 
-# Add rooting prevention
+# Disable root restriction
 # CONFIG_SEC_RESTRICT_ROOTING is not set
 # CONFIG_SEC_RESTRICT_SETUID is not set
 # CONFIG_SEC_RESTRICT_FORK is not set
