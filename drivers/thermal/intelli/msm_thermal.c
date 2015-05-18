@@ -69,7 +69,7 @@ static int limit_idx;
  * min limit is set to 810000 Mhz!
  * check your FREQ Table and set corect limit_idx_low freq number.
  */
-static int limit_idx_low = 4;
+static int limit_idx_low = 5;
 
 static int limit_idx_high;
 static struct cpufreq_frequency_table *table;
