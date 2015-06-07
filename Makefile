@@ -246,8 +246,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = $(CCACHE) gcc
 HOSTCXX      = $(CCACHE) g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O3 -fno-tree-vectorize -fomit-frame-pointer
-HOSTCXXFLAGS = -O3 -fno-tree-vectorize
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-tree-vectorize -fno-inline-functions -fomit-frame-pointer
+HOSTCXXFLAGS = -Ofast -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-tree-vectorize -fno-inline-functions
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -357,10 +357,16 @@ CC		= $(srctree)/scripts/gcc-wrapper.py $(REAL_CC)
 
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
-CFLAGS_MODULE   = -fno-pic -mcpu=cortex-a15 -mtune=cortex-a15 -mfpu=neon-vfpv4
-AFLAGS_MODULE   =
+
+KERNEL_FLAGS	= -marm -mtune=cortex-a15 -mcpu=cortex-a15 -mfpu=neon-vfpv4 \
+                  -Wno-unused-variable -Wno-unused-function -Wno-sizeof-pointer-memaccess \
+		  -Wno-sequence-point -Wno-aggressive-loop-optimizations -fno-tree-vectorize \
+		  -fmodulo-sched -ffast-math -funsafe-math-optimizations
+
+CFLAGS_MODULE   = -DMODULE $(KERNEL_FLAGS)
+AFLAGS_MODULE   = -DMODULE $(KERNEL_FLAGS)
 LDFLAGS_MODULE  =
-CFLAGS_KERNEL	= -mcpu=cortex-a15 -mtune=cortex-a15 -mfpu=neon-vfpv4
+CFLAGS_KERNEL	= $(KERNEL_FLAGS)
 ifdef CONFIG_CC_GRAPHITE_OPTIMIZATION
 CFLAGS_KERNEL += -fgraphite-identity -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block
 endif
@@ -380,14 +386,9 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
-		   -Wno-unused-variable -Wno-unused-function \
-                   -Wno-cpp -Wno-declaration-after-statement -fno-var-tracking-assignments -Wno-sequence-point -fno-tree-vectorize -ffast-math \
-		   -mcpu=cortex-a15 -mtune=cortex-a15 -mfpu=neon-vfpv4 \
-		   -Wno-sizeof-pointer-memaccess \
-		   -Wno-sequence-point \
-		   -Wno-aggressive-loop-optimizations \
-		   -std=gnu89 -fno-pic \
-		   -fno-delete-null-pointer-checks
+		   -fno-delete-null-pointer-checks \
+		   $(KERNEL_FLAGS)
+
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -580,7 +581,7 @@ all: vmlinux
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
 else
-KBUILD_CFLAGS	+= -O3 -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-tree-vectorize $(call cc-disable-warning,maybe-uninitialized,)
+KBUILD_CFLAGS	+= -Ofast -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-tree-vectorize -fno-inline-functions $(call cc-disable-warning,maybe-uninitialized,)
 ifdef CONFIG_CC_GRAPHITE_OPTIMIZATION
 KBUILD_CFLAGS += -fgraphite-identity -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block
 endif
