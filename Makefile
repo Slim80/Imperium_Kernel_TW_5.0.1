@@ -359,8 +359,8 @@ CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
 
 KERNEL_FLAGS	= -marm -mtune=cortex-a15 -mcpu=cortex-a15 -mfpu=neon-vfpv4 \
-                  -Wno-unused-variable -Wno-unused-function -Wno-sizeof-pointer-memaccess \
-		  -Wno-sequence-point -Wno-aggressive-loop-optimizations -fno-tree-vectorize \
+                  -Wno-unused-variable -Wno-unused-function \
+		  -Wno-sequence-point -fno-tree-vectorize \
 		  -fmodulo-sched -ffast-math -funsafe-math-optimizations
 
 CFLAGS_MODULE   = -DMODULE $(KERNEL_FLAGS)
@@ -386,6 +386,8 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
+		   -Wno-sizeof-pointer-memaccess \
+		   -Wno-aggressive-loop-optimizations \
 		   -fno-delete-null-pointer-checks \
 		   $(KERNEL_FLAGS)
 
