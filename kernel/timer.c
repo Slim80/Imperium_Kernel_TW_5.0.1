@@ -148,9 +148,11 @@ static unsigned long round_jiffies_common(unsigned long j, int cpu,
 	/* now that we have rounded, subtract the extra skew again */
 	j -= cpu * 3;
 
-	if (j <= jiffies) /* rounding ate our timeout entirely; */
-		return original;
-	return j;
+	/*
+	 * Make sure j is still in the future. Otherwise return the
+	 * unmodified value.
+	 */
+	return time_is_after_jiffies(j) ? j : original;
 }
 
 /**
@@ -1698,7 +1700,6 @@ static int __cpuinit init_timers_cpu(int cpu)
 #ifdef CONFIG_MACH_JF
 	if ((*lock_init) != cpu) {
 		*lock_init = cpu;
-		spin_lock_init(&base->lock);
 		printk(KERN_INFO "tvec base lock initialized for cpu%d\n", cpu);
 	}
 #endif

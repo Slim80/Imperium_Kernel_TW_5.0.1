@@ -13,9 +13,6 @@ OPEN_RW;
 
 sleep 5;
 
-# Run Qualcomm scripts
-$BB sh /init.qcom.post_boot.sh;
-
 sleep 5;
 OPEN_RW;
 
@@ -170,6 +167,9 @@ fi;
 
 # Enable kmem interface for everyone by GM
 	echo "0" > /proc/sys/kernel/kptr_restrict;
+	
+# Run Qualcomm scripts
+$BB sh /sbin/init.qcom.post_boot.sh;
 
 # Apply STweaks defaults
 export CONFIG_BOOTING=1

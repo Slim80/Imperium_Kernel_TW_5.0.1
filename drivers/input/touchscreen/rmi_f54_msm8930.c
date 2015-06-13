@@ -4757,14 +4757,7 @@ static void synaptics_rmi4_f54_remove(struct synaptics_rmi4_data *rmi4_data)
 	destroy_workqueue(f54->status_workqueue);
 
 #ifdef FACTORY_MODE
-	sysfs_remove_group(&f54->factory_data->fac_dev_ts->kobj, &cmd_attr_group);
-	sysfs_remove_group(&f54->factory_data->fac_dev_tskey->kobj, &tskey_attr_group);
-	sysfs_remove_group(&f54->factory_data->fac_dev_tsp_ic->kobj, &tspic_attr_group);
-
-	device_unregister(f54->factory_data->fac_dev_tsp_ic);
-	device_unregister(f54->factory_data->fac_dev_tskey);
-	device_unregister(f54->factory_data->fac_dev_ts);
-
+	sysfs_remove_group(f54->attr_dir, &cmd_attr_group);
 	kfree(f54->factory_data->abscap_data);
 	kfree(f54->factory_data->absdelta_data);
 	kfree(f54->factory_data->rawcap_data);

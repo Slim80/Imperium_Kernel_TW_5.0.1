@@ -421,9 +421,9 @@ wont_overwrite:
  */
 		orrs	r1, r0, r5
 #ifdef CONFIG_CRYPTO_FIPS_OLD_INTEGRITY_CHECK
-		beq not_relocated_copy
+		beq	not_relocated_copy
 #else
-		beq	not_relocated
+                beq     not_relocated
 #endif
 		add	r11, r11, r0
 		add	r12, r12, r0
@@ -775,6 +775,7 @@ __armv7_mmu_cache_on:
 		mcrne	p15, 0, r0, c8, c7, 0	@ flush I,D TLBs
 #endif
 		mrc	p15, 0, r0, c1, c0, 0	@ read control reg
+		bic	r0, r0, #1 << 28	@ clear SCTLR.TRE
 		orr	r0, r0, #0x5000		@ I-cache enable, RR cache replacement
 		orr	r0, r0, #0x003c		@ write buffer
 #ifdef CONFIG_MMU

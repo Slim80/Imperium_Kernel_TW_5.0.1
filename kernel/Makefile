@@ -2,7 +2,7 @@
 # Makefile for the linux kernel.
 #
 
-EXTRA_CFLAGS += -Wno-array-bounds
+EXTRA_CFLAGS += -Wno-array-bounds -Werror-implicit-function-declaration 
 
 obj-y     = fork.o exec_domain.o panic.o printk.o \
 	    cpu.o exit.o itimer.o time.o softirq.o resource.o \
