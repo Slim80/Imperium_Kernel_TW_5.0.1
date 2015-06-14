@@ -1,5 +1,3 @@
-EXTRA_CFLAGS += -Wno-array-bounds
-
 ccflags-y := -Iinclude/drm -Idrivers/gpu/msm
 
 msm_kgsl_core-y = \
