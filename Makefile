@@ -360,7 +360,7 @@ CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
 
 KERNEL_FLAGS	= -marm -mtune=cortex-a15 -mcpu=cortex-a15 -mfpu=neon-vfpv4 \
-		  -mvectorize-with-neon-quad -ftree-vectorize -fno-tree-vectorize \
+		  -mvectorize-with-neon-quad -ftree-vectorize \
 		  -fmodulo-sched -ffast-math -funsafe-math-optimizations
 
 CFLAGS_MODULE   = -DMODULE $(KERNEL_FLAGS)
