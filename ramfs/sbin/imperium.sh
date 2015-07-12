@@ -6,8 +6,7 @@ BB=/sbin/busybox
 
 OPEN_RW()
 {
-        $BB mount -o remount,rw /;
-        $BB mount -o remount,rw /system;
+	$BB mount -o remount,rw /;
 }
 OPEN_RW;
 
@@ -22,7 +21,7 @@ OPEN_RW;
 
 # Symlink
 if [ ! -e /cpufreq ]; then
-	$BB ln -s /sys/devices/system/cpu/cpu0/cpufreq /cpufreq;
+	$BB ln -s /sys/devices/system/cpu/cpu0/cpufreq/ /cpufreq;
 	$BB ln -s /sys/devices/system/cpu/cpufreq/ /cpugov;
 fi;
 
@@ -30,6 +29,8 @@ fi;
 $BB rm -rf /cache/lost+found/* 2> /dev/null;
 $BB rm -rf /data/lost+found/* 2> /dev/null;
 $BB rm -rf /data/tombstones/* 2> /dev/null;
+
+OPEN_RW;
 
 CRITICAL_PERM_FIX()
 {
@@ -41,10 +42,11 @@ CRITICAL_PERM_FIX()
 	$BB chown -R root:root /lib;
 	$BB chmod -R 777 /tmp/;
 	$BB chmod -R 775 /res/;
+	$BB chmod -R 755 /sbin;
 	$BB chmod -R 06755 /sbin/ext/;
 	$BB chmod -R 0777 /data/anr/;
 	$BB chmod -R 0400 /data/tombstones;
-	$BB chmod 06755 /sbin/busybox;
+	$BB chmod 06755 /sbin/busybox
 	$BB chown -R root:root /data/property;
 	$BB chmod -R 0700 /data/property;
 }
@@ -75,30 +77,27 @@ if [ ! -d /data/.imperium ]; then
 	$BB mkdir -p /data/.imperium;
 fi;
 
+[ ! -f /data/.imperium/default.profile ] && cp -a /res/customconfig/default.profile /data/.imperium/default.profile;
+[ ! -f /data/.imperium/battery.profile ] && cp -a /res/customconfig/battery.profile /data/.imperium/battery.profile;
+[ ! -f /data/.imperium/performance.profile ] && cp -a /res/customconfig/performance.profile /data/.imperium/performance.profile;
+[ ! -f /data/.imperium/extreme_performance.profile ] && cp -a /res/customconfig/extreme_performance.profile /data/.imperium/extreme_performance.profile;
+[ ! -f /data/.imperium/extreme_battery.profile ] && cp -a /res/customconfig/extreme_battery.profile /data/.imperium/extreme_battery.profile;
+
 $BB chmod -R 0777 /data/.imperium/;
 
 . /res/customconfig/customconfig-helper;
-
-ccxmlsum=`md5sum /res/customconfig/customconfig.xml | awk '{print $1}'`
-if [ "a${ccxmlsum}" != "a`cat /data/.imperium/.ccxmlsum`" ];
-then
-   $BB rm -f /data/.imperium/*.profile;
-   echo ${ccxmlsum} > /data/.imperium/.ccxmlsum;
-fi;
-
-[ ! -f /data/.imperium/default.profile ] && cp /res/customconfig/default.profile /data/.imperium/default.profile;
-[ ! -f /data/.imperium/battery.profile ] && cp /res/customconfig/battery.profile /data/.imperium/battery.profile;
-[ ! -f /data/.imperium/balanced.profile ] && cp /res/customconfig/balanced.profile /data/.imperium/balanced.profile;
-[ ! -f /data/.imperium/performance.profile ] && cp /res/customconfig/performance.profile /data/.imperium/performance.profile;
-
 read_defaults;
 read_config;
 
+# Apply STweaks defaults
+$BB sh /res/uci_boot.sh apply;
+$BB mv /res/uci_boot.sh /res/uci.sh;
+
 # Android logger
 if [ "$logger_mode" == "on" ]; then
-	echo "1" > /sys/kernel/logger_mode/logger_mode;
+	$BB echo "1" > /sys/kernel/logger_mode/logger_mode;
 else
-	echo "0" > /sys/kernel/logger_mode/logger_mode;
+	$BB echo "0" > /sys/kernel/logger_mode/logger_mode;
 fi;
 
 # zRam
@@ -108,38 +107,37 @@ UNIT="M"
 	echo "0" > /proc/sys/vm/page-cluster;
 fi;
 
-# scheduler
-	echo "$int_scheduler" > /sys/block/mmcblk0/queue/scheduler;
-	echo "$int_read_ahead_kb" > /sys/block/mmcblk0/bdi/read_ahead_kb;
-	echo "$ext_scheduler" > /sys/block/mmcblk1/queue/scheduler;
-	echo "$ext_read_ahead_kb" > /sys/block/mmcblk1/bdi/read_ahead_kb;
+# Scheduler
+	$BB echo "$int_scheduler" > /sys/block/mmcblk0/queue/scheduler;
+	$BB echo "$int_read_ahead_kb" > /sys/block/mmcblk0/bdi/read_ahead_kb;
+	$BB echo "$ext_scheduler" > /sys/block/mmcblk1/queue/scheduler;
+	$BB echo "$ext_read_ahead_kb" > /sys/block/mmcblk1/bdi/read_ahead_kb;
 
 # CPU
-	echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
-	echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor;
-	echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor;
-	echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor;
-	echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
-	echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
-	echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq;
-	echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq;
-	echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq;
-	echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq;
-	echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq;
-	echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq;
-
-# Enable kmem interface for everyone by GM
-	echo "0" > /proc/sys/kernel/kptr_restrict;
-
-# Apply STweaks defaults
-export CONFIG_BOOTING=1
-/res/uci.sh apply
-export CONFIG_BOOTING=
+	$BB echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
+	$BB echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor;
+	$BB echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor;
+	$BB echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor;
+	$BB echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+	$BB echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
+	$BB echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq;
+	$BB echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq;
+	$BB echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq;
+	$BB echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq;
+	$BB echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq;
+	$BB echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq;
 
 OPEN_RW;
 
 # Fix critical perms again after init.d mess
 	CRITICAL_PERM_FIX;
 	
+sleep 2;
+
 # script finish here, so let me know when
+rm /data/local/tmp/Imperium_LL_Kernel
+touch /data/local/tmp/Imperium_LL_Kernel
 echo "Imperium LL Kernel script correctly applied" > /data/local/tmp/Imperium_LL_Kernel;
+
+$BB mount -o remount,ro /system;
+

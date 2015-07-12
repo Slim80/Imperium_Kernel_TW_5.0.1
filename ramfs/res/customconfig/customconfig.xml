@@ -1,6 +1,3 @@
-#!/sbin/busybox sh
- 
-cat << ENDCONFIG
 <settingsRoot>
 
   <settingsTab name="CPU">
@@ -40,6 +37,7 @@ cat << ENDCONFIG
 			<spinnerItem name="Optimax" value="optimax"/>
 			<spinnerItem name="Preservative" value="preservative"/>
 			<spinnerItem name="SmartassH3" value="smartassH3"/>
+			<spinnerItem name="Barry_Allen" value="barry_allen"/>
        </spinner>
        
       <spinner description="Set the maximum frequency the CPU scales up to. Default: 1890 MHz." 
@@ -414,4 +412,4 @@ cat << ENDCONFIG
   </settingsTab>
 
 </settingsRoot>
-ENDCONFIG
+
