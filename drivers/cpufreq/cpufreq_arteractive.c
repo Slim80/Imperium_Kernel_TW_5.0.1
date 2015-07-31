@@ -118,9 +118,6 @@ static unsigned int hispeed_freq = 1026000;
 #define DEFAULT_GO_HISPEED_LOAD 99
 static unsigned long go_hispeed_load = DEFAULT_GO_HISPEED_LOAD;
 
-/* Go to hi speed when CPU load at or above this value on screen-off state */
-#define DEFAULT_GO_HISPEED_LOAD_SCREEN_OFF 110
-
 /* Sampling down factor to be applied to min_sample_time at max freq */
 static unsigned int sampling_down_factor = 100000;
 
@@ -715,7 +712,7 @@ static void __cpufreq_interactive_timer(unsigned long data, bool is_notif)
 #endif
 
 	if (cpu_load >= go_hispeed_load || boosted) {
-		if (pcpu->policy->cpu == 0) {
+		if (pcpu->policy->cpu == 0 && !suspended) {
 			if (pcpu->target_freq < this_hispeed_freq) {
 				new_freq = this_hispeed_freq;
 			} else {
@@ -1996,14 +1993,12 @@ static void cpufreq_interactive_nop_timer(unsigned long data)
 static void arteractive_early_suspend(struct early_suspend *handler)
 {
 	suspended = true;
-	go_hispeed_load = DEFAULT_GO_HISPEED_LOAD_SCREEN_OFF;
 	return;
 }
 
 static void arteractive_late_resume(struct early_suspend *handler)
 {
 	suspended = false;
-	go_hispeed_load = DEFAULT_GO_HISPEED_LOAD;
 	return;
 }
 
