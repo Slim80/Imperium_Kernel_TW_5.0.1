@@ -107,8 +107,49 @@ cat << ENDCONFIG
 		
 			<spinner description="Hotplug mechanism. Default: MPDecision" name="Hotplug mechanism" action="hotplug /tmp/hotplug">
              			<spinnerItem name="MPDecision" value="0"/> 
-             			<spinnerItem name="Intelli-Plug" value="1"/> 
+             			<spinnerItem name="IntelliPlug" value="1"/> 
        			</spinner>
+	</settingsPane>
+	
+	<settingsPane name="IntelliPlug"
+		description="IntelliPlug settings">
+		
+			<spinner description="IntelliPlug Profile. Default: Balanced" name="Profile" action="generic /sys/module/intelli_plug/parameters/nr_run_profile_sel">
+             			<spinnerItem name="Balanced" value="0"/> 
+             			<spinnerItem name="Performance" value="1"/> 
+				<spinnerItem name="Conservative" value="2"/>
+				<spinnerItem name="Eco Performance" value="3"/>
+				<spinnerItem name="Eco Conservative" value="4"/>
+       			</spinner>
+			
+			<spinner description="This will boost your minimun CPU speed if you touch the screen or press a button. Default: Enabled" name="Touch Boost" action="generic /sys/module/intelli_plug/parameters/touch_boost_active">
+             			<spinnerItem name="Disabled" value="0"/> 
+             			<spinnerItem name="Enabled" value="1"/> 
+       			</spinner>
+			
+			<seekBar description="The lower it is, the faster response. Default: 8" name="Hysteresis" action="generic /sys/module/intelli_plug/parameters/nr_run_hysteresis" unit="" min="0" reversed="false" step="1" max="16"/>
+			
+			<spinner description="Set the maximum frequency the CPU scales up to when the screen is off. Default: Disabled" 
+          			name="CPU Max Screen Off Freq" 
+				action="generic /sys/module/intelli_plug/parameters/screen_off_max">
+					<spinnerItem name="Disabled" value="4294967295"/>
+             				<spinnerItem name="384000" value="384000"/> 
+             				<spinnerItem name="486000" value="486000"/> 
+             				<spinnerItem name="594000" value="594000"/> 
+            				<spinnerItem name="702000" value="702000"/> 
+             				<spinnerItem name="810000" value="810000"/> 
+             				<spinnerItem name="918000" value="918000"/> 
+             				<spinnerItem name="1026000" value="1026000"/> 
+             				<spinnerItem name="1134000" value="1134000"/> 
+            				<spinnerItem name="1242000" value="1242000"/> 
+             				<spinnerItem name="1350000" value="1350000"/> 
+             				<spinnerItem name="1458000" value="1458000"/> 
+             				<spinnerItem name="1566000" value="1566000"/> 
+             				<spinnerItem name="1674000" value="1674000"/> 
+             				<spinnerItem name="1782000" value="1782000"/> 
+             				<spinnerItem name="1890000" value="1890000"/> 
+      			</spinner>
+		
 	</settingsPane>
 			
 	<settingsPane name="Hotplug ZenDecision"
