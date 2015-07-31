@@ -78,6 +78,9 @@ setprop profiler.force_disable_ulog 1
 setprop ro.ril.disable.power.collapse 0
 setprop persist.service.btui.use_aptx 1
 
+# Make sure that max gpu clock is set by default to 450 MHz
+$BB echo 450000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk;
+
 # STweaks suppot
 $BB rm -f /system/app/HybridTweaks.apk > /dev/null 2>&1;
 $BB rm -f /system/app/Hulk-Kernel sTweaks.apk > /dev/null 2>&1;
