@@ -75,6 +75,8 @@ setprop persist.service.adb.enable 1
 setprop pm.sleep_mode 1
 setprop logcat.live disable
 setprop profiler.force_disable_ulog 1
+setprop ro.ril.disable.power.collapse 0
+setprop persist.service.btui.use_aptx 1
 
 # STweaks suppot
 $BB rm -f /system/app/HybridTweaks.apk > /dev/null 2>&1;
