@@ -21,8 +21,11 @@ $BB chmod 06755 /system/xbin/busybox
 
 sleep 1;
 
-# Run Qualcomm scripts
-$BB sh /sbin/init.qcom.post_boot.sh;
+# Run Qualcomm scripts in system/etc folder if exists
+if [ -f /system/etc/init.qcom.post_boot.sh ]; then
+	$BB chmod 755 /system/etc/init.qcom.post_boot.sh;
+	$BB sh /system/etc/init.qcom.post_boot.sh;
+fi;
 
 sleep 1;
 
