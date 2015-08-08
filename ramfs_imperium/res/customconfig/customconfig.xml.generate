@@ -151,6 +151,22 @@ cat << ENDCONFIG
       			</spinner>
 		
 	</settingsPane>
+			
+	<settingsPane name="Hotplug ZenDecision"
+		description="Hotplug ZenDecision">
+			
+			 <spinner description="ZenDecision is a handler to account for behavior caused by disabling some of these services. Default: Enabled"
+               			name="ZenDecision" 
+               			action="generic /sys/kernel/zen_decision/enabled">
+             			<spinnerItem name="Disabled" value="0"/> 
+             			<spinnerItem name="Enabled" value="1"/> 
+       			</spinner>
+			
+			<seekBar description="How long to wait before executing CPU_UP work. Default: 1000ms" name="Wake Wait Time" action="generic /sys/kernel/zen_decision/wake_wait_time" unit="ms" min="0" reversed="false" step="1000" max="60000"/>
+			
+			<seekBar description="Don't do any CPU_UP work up to this battery charge level. Default: 15" name="Bat Threshold Ignore" action="generic /sys/kernel/zen_decision/bat_threshold_ignore" unit="" min="0" reversed="false" step="1" max="100"/>
+			
+	</settingsPane>
   </settingsTab>
 
   <settingsTab name="MSM-THERMAL">
