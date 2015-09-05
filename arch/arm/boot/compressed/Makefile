@@ -22,7 +22,7 @@ OBJS		+= sdhi-shmobile.o
 OBJS		+= sdhi-sh7372.o
 endif
 
-AFLAGS_head.o := -DTEXT_OFFSET=$(TEXT_OFFSET)
+AFLAGS_head.o += -DTEXT_OFFSET=$(TEXT_OFFSET)
 AFLAGS_head.o += -Wa,-march=armv7-a$(plus_sec)
 AFLAGS_head.o += -Wa,-mcpu=cortex-a15
 # change@wtl.rsengott
@@ -107,7 +107,6 @@ suffix_$(CONFIG_KERNEL_GZIP) = gzip
 suffix_$(CONFIG_KERNEL_LZO)  = lzo
 suffix_$(CONFIG_KERNEL_LZMA) = lzma
 suffix_$(CONFIG_KERNEL_XZ)   = xzkern
-suffix_$(CONFIG_KERNEL_LZ4)  = lz4
 
 # Borrowed libfdt files for the ATAG compatibility mode
 
@@ -132,7 +131,7 @@ targets       := vmlinux vmlinux.lds \
 		 font.o font.c head.o misc.o decompress.o $(OBJS)
 
 # Make sure files are removed during clean
-extra-y       += piggy.gzip piggy.lzo piggy.lzma piggy.xzkern piggy.lz4 \
+extra-y       += piggy.gzip piggy.lzo piggy.lzma piggy.xzkern \
 		 lib1funcs.S ashldi3.S $(libfdt) $(libfdt_hdrs)
 
 ifeq ($(CONFIG_FUNCTION_TRACER),y)

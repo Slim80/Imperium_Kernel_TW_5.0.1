@@ -534,7 +534,7 @@ call_kernel:
 		mov	r2, r8			@ restore atags pointer
  ARM(		mov	pc, r4	)		@ call kernel
  THUMB(		bx	r4	)		@ entry point is always ARM
- 
+
 		.ltorg
 
 		.align	2
