@@ -288,6 +288,7 @@ on post-fs-data
     chmod 0771 /data
     # We restorecon /data in case the userdata partition has been reset.
     restorecon /data
+    restorecon_recursive /data/system/container
     restorecon_recursive /data/media
 
     # Avoid predictable entropy pool. Carry over entropy from previous boot.
@@ -423,6 +424,10 @@ on post-fs-data
     chmod 0775 /system/lib/drm
 
     restorecon -R /efs
+    restorecon -R /carrier
+    restorecon_recursive /data/misc/keystore
+    restorecon_recursive /data/property
+    restorecon_recursive /data/security
 # ]
 
     # symlink to bugreport storage location
@@ -898,6 +903,10 @@ on property:selinux.reload_policy=1
 	chown -R system system /sys/fs/selinux/booleans
     chown system system /sys/fs/selinux/commit_pending_bools
 
+# SEC_SELINUX to support spota
+on property:selinux.sec.restorecon=1
+    restorecon_recursive /data/security/spota
+
 # SEC_SELINUX
 on property:init.svc.bootanim=stopped
     start auditd
@@ -942,6 +951,9 @@ service vold /system/bin/vold
 ## Samsung ODE >>>
     socket dir_enc_report stream 0660 root mount
 ## Samsung ODE <<<
+
+## Frigatebird
+    socket frigate stream 0660 system system
 
 service epmd /system/bin/epmd
     class main
