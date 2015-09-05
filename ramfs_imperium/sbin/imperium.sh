@@ -126,9 +126,8 @@ else
 fi;
 
 # zRam
-if [ "$sammyzram" == "on" ];then
-UNIT="M"
-	/system/bin/rtccd3 -a "$zramdisksize$UNIT"
+if [ "$sswap" == "on" ];then
+	/sbin/sswap -s
 	$BB echo "0" > /proc/sys/vm/page-cluster;
 fi;
 

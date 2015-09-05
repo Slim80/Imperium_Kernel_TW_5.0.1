@@ -433,10 +433,8 @@ cat << ENDCONFIG
     <settingsPane name="Virtual Memory" 
 	description="Virtual Memory"> 
 	
-		<checkbox description="Enable or Disable zRam (needs reboot). Default: on" name="zRam" action="generic01 /tmp/sammyzram" label="zRam"/>      
+		<checkbox description="Enable or Disable Swap (needs reboot). Default: on" name="Swap" action="generic01 /tmp/sswap" label="Enable zRam"/>      
       		
-		<seekBar description="zRam disk size (needs reboot). Default: 700 MB" name="zRam disk size" action="generic /tmp/zramdisksize" unit="MB" min="300" reversed="false" step="100" max="1000"/>
-      
 		<seekBar description="Swappiness. Default: 60%" name="Swappiness" action="generic /proc/sys/vm/swappiness" unit="%" min="0" reversed="false" step="1" max="90"/>
       
 		<seekBar description="Dirty background memory buffer. Default: 5%" name="Dirty Background Ratio" action="generic /proc/sys/vm/dirty_background_ratio" unit="%" min="5" reversed="false" step="5" max="80"/>
