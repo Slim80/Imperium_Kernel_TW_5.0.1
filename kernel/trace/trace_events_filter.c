@@ -1365,11 +1365,12 @@ static int check_preds(struct filter_parse_state *ps)
 			continue;
 		}
 
-		cnt--;
 		if (elt->op == OP_AND || elt->op == OP_OR) {
 			n_logical_preds++;
+			cnt--;
 			continue;
 		}
+		cnt--;
 		n_normal_preds++;
 		WARN_ON_ONCE(cnt < 0);
 	}
