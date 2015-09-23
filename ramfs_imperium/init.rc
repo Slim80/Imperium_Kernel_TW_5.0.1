@@ -14,7 +14,6 @@ import /init.carrier.rc
 on early-init
     # Set init and its forked children's oom_adj.
     write /proc/1/oom_score_adj -1000
-    write /proc/1/oom_adj -16
 
     # Apply strict SELinux checking of PROT_EXEC on mmap/mprotect calls.
     write /sys/fs/selinux/checkreqprot 0
@@ -337,6 +336,7 @@ on post-fs-data
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
     mkdir /data/misc/wifi_share_profile 0771 wifi system
+    mkdir /data/misc/wifi_hostapd 0771 wifi system
     mkdir /data/misc/ethernet 0770 system system
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     mkdir /data/misc/user 0771 root root
@@ -481,6 +481,12 @@ on boot
     chmod 0664 /sys/module/lowmemorykiller/parameters/adj
     chown root system /sys/module/lowmemorykiller/parameters/minfree
     chmod 0664 /sys/module/lowmemorykiller/parameters/minfree
+
+    # for BT MAC address
+    mkdir /efs/bluetooth 0775 radio system
+    # if already exist
+    chown radio system /efs/bluetooth
+    chmod 0775 /efs/bluetooth
 
     # Tweak background writeout
     write /proc/sys/vm/dirty_expire_centisecs 200
@@ -904,6 +910,7 @@ on property:selinux.reload_policy=1
 # SEC_SELINUX to support spota
 on property:selinux.sec.restorecon=1
     restorecon_recursive /data/security/spota
+    restorecon_recursive /data/security/aasa
 
 # SEC_SELINUX
 on property:init.svc.bootanim=stopped
@@ -946,18 +953,15 @@ service vold /system/bin/vold
     class core
     socket vold stream 0660 root mount
     ioprio be 2
+## Knox
+    socket epm stream 0660 system system
+    socket ppm stream 0660 system system
 ## Samsung ODE >>>
     socket dir_enc_report stream 0660 root mount
 ## Samsung ODE <<<
 
 ## Frigatebird
     socket frigate stream 0660 system system
-
-service epmd /system/bin/epmd
-    class main
-    socket epm stream 0660 system system
-    socket ppm stream 0660 system system
-    ioprio be 2
 
 service netd /system/bin/netd
     class main
