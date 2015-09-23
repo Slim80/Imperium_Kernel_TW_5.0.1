@@ -151,7 +151,7 @@ cat << ENDCONFIG
       			</spinner>
 		
 	</settingsPane>
-			
+
 	<settingsPane name="Hotplug ZenDecision"
 		description="Hotplug ZenDecision">
 			
@@ -429,6 +429,7 @@ cat << ENDCONFIG
                 label="Enable Android logger"/>
 
     </settingsPane>
+    
       
     <settingsPane name="Virtual Memory" 
 	description="Virtual Memory"> 
