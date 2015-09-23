@@ -421,7 +421,7 @@ cat << ENDCONFIG
 	
 		<checkbox description="Enable or Disable Swap (needs reboot). Default: on" name="Swap" action="generic01 /tmp/sswap" label="Enable zRam"/>      
       		
-		<seekBar description="Swappiness. Default: 60%" name="Swappiness" action="generic /proc/sys/vm/swappiness" unit="%" min="0" reversed="false" step="1" max="90"/>
+		<seekBar description="Swappiness. Default: 130%" name="Swappiness" action="generic /proc/sys/vm/swappiness" unit="%" min="0" reversed="false" step="5" max="150"/>
       
 		<seekBar description="Dirty background memory buffer. Default: 5%" name="Dirty Background Ratio" action="generic /proc/sys/vm/dirty_background_ratio" unit="%" min="5" reversed="false" step="5" max="80"/>
 
