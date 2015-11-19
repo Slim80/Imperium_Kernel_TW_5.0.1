@@ -125,12 +125,6 @@ else
 	$BB echo "0" > /sys/kernel/logger_mode/logger_mode;
 fi;
 
-# zRam
-if [ "$sswap" == "on" ];then
-	/sbin/sswap -s
-	$BB echo "0" > /proc/sys/vm/page-cluster;
-fi;
-
 # Scheduler
 	$BB echo "$int_scheduler" > /sys/block/mmcblk0/queue/scheduler;
 	$BB echo "$int_read_ahead_kb" > /sys/block/mmcblk0/bdi/read_ahead_kb;

@@ -417,9 +417,7 @@ cat << ENDCONFIG
     
       
     <settingsPane name="Virtual Memory" 
-	description="Virtual Memory"> 
-	
-		<checkbox description="Enable or Disable Swap (needs reboot). Default: on" name="Swap" action="generic01 /tmp/sswap" label="Enable zRam"/>      
+	description="Virtual Memory">   
       		
 		<seekBar description="Swappiness. Default: 130%" name="Swappiness" action="generic /proc/sys/vm/swappiness" unit="%" min="0" reversed="false" step="5" max="150"/>
       

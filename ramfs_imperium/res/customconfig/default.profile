@@ -62,7 +62,6 @@ gpl_headset_mic_gain=40
 gpl_hdmi_spkr_gain=40
 gpl_speaker_gain=40
 logger_mode=on
-sswap=on
 swappiness=130
 dirty_background_ratio=5
 dirty_ratio=20
