@@ -172,12 +172,12 @@ on property:sys.qseecomd.enable=true
 
 
 # SSWAP
-#service swapon /sbin/sswap -s
-#    class core
-#    user root
-#    group root
-#    seclabel u:r:sswap:s0
-#    oneshot
+service swapon /sbin/sswap -s
+    class core
+    user root
+    group root
+    seclabel u:r:sswap:s0
+    oneshot
 
 # IPSec for VOLTE
 service ipsec-daemon /system/bin/IPSecService

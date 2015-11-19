@@ -1032,9 +1032,13 @@ on property:sys.qseecomd.enable=true
     start insthk
 
 #h2k permission
+    mkdir /efs/cpk 0771 radio system
     chmod 0644 /efs/redata.bin
+    chmod 0644 /efs/cpk/redata.bin
     chown radio radio /efs/h2k.dat
+    chown radio radio /efs/cpk/h2k.dat
     chmod 0644 /efs/h2k.dat
+    chmod 0644 /efs/cpk/h2k.dat
     chown system system /efs/drm/h2k
 
 service drm /system/bin/drmserver
