@@ -194,6 +194,7 @@ static int lowmem_shrink(struct shrinker *s, struct shrink_control *sc)
 	)
 	unsigned long nr_to_scan = sc->nr_to_scan;
 #endif
+	struct reclaim_state *reclaim_state = current->reclaim_state;
 #ifndef CONFIG_CMA
 	int other_free = global_page_state(NR_FREE_PAGES);
 #else
@@ -371,6 +372,8 @@ static int lowmem_shrink(struct shrinker *s, struct shrink_control *sc)
 			send_sig(SIGKILL, selected[i], 0);
 			set_tsk_thread_flag(selected[i], TIF_MEMDIE);
 			rem -= selected_tasksize[i];
+			if(reclaim_state)
+				reclaim_state->reclaimed_slab += selected_tasksize[i];
 #ifdef LMK_COUNT_READ
 			lmk_count++;
 #endif
@@ -391,6 +394,8 @@ static int lowmem_shrink(struct shrinker *s, struct shrink_control *sc)
 		send_sig(SIGKILL, selected, 0);
 		set_tsk_thread_flag(selected, TIF_MEMDIE);
 		rem -= selected_tasksize;
+		if(reclaim_state)
+			reclaim_state->reclaimed_slab = selected_tasksize;
 #ifdef LMK_COUNT_READ
 		lmk_count++;
 #endif
