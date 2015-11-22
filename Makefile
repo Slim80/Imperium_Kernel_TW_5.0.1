@@ -387,7 +387,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Wno-format-security \
 		   -Wno-sizeof-pointer-memaccess \
 		   -Wno-aggressive-loop-optimizations \
-		   -Wno-sequence-point -Wno-unused-variable -Wno-unused-function \
+		   -Wno-sequence-point -Wno-unused-variable -Wno-unused-function -Wno-logical-not-parentheses \
 		   -fno-delete-null-pointer-checks \
 		   $(KERNEL_FLAGS)
 
