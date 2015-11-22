@@ -53,19 +53,14 @@ OPEN_RW;
 CRITICAL_PERM_FIX()
 {
 	# critical Permissions fix
-	$BB chown -R system:system /data/anr;
 	$BB chown -R root:root /tmp;
 	$BB chown -R root:root /res;
 	$BB chown -R root:root /sbin;
 	$BB chown -R root:root /lib;
 	$BB chmod -R 777 /tmp/;
 	$BB chmod -R 775 /res/;
-	$BB chmod -R 06755 /sbin/ext/;
-	$BB chmod -R 0777 /data/anr/;
-	$BB chmod -R 0400 /data/tombstones;
-	$BB chown -R root:root /data/property;
-	$BB chmod -R 0700 /data/property;
 	$BB chmod 06755 /sbin/busybox;
+	$BB chmod 06755 /system/xbin/busybox;
 }
 CRITICAL_PERM_FIX;
 
@@ -154,7 +149,7 @@ OPEN_RW;
 
 $BB chmod 777 $PROFILE_PATH/default.profile
 
-# Fix critical perms again after init.d mess
+# Fix critical perms again
 	CRITICAL_PERM_FIX;
 	
 sleep 2;
