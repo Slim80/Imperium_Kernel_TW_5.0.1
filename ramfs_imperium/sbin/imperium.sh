@@ -73,6 +73,19 @@ setprop profiler.force_disable_ulog 1
 setprop ro.ril.disable.power.collapse 0
 setprop persist.service.btui.use_aptx 1
 
+# Google Services battery drain fixer by Alcolawl@xda
+# http://forum.xda-developers.com/google-nexus-5/general/script-google-play-services-battery-t3059585/post59563859
+pm enable com.google.android.gms/.update.SystemUpdateActivity
+pm enable com.google.android.gms/.update.SystemUpdateService
+pm enable com.google.android.gms/.update.SystemUpdateService$ActiveReceiver
+pm enable com.google.android.gms/.update.SystemUpdateService$Receiver
+pm enable com.google.android.gms/.update.SystemUpdateService$SecretCodeReceiver
+pm enable com.google.android.gsf/.update.SystemUpdateActivity
+pm enable com.google.android.gsf/.update.SystemUpdatePanoActivity
+pm enable com.google.android.gsf/.update.SystemUpdateService
+pm enable com.google.android.gsf/.update.SystemUpdateService$Receiver
+pm enable com.google.android.gsf/.update.SystemUpdateService$SecretCodeReceiver
+
 # Make sure that max gpu clock is set by default to 450 MHz
 $BB echo 450000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk;
 
