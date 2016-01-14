@@ -89,7 +89,7 @@ pm enable com.google.android.gsf/.update.SystemUpdateService$SecretCodeReceiver
 # Make sure that max gpu clock is set by default to 450 MHz
 $BB echo 450000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk;
 
-# STweaks suppot
+# STweaks support
 $BB rm -f /system/app/HybridTweaks.apk > /dev/null 2>&1;
 $BB rm -f /system/app/Hulk-Kernel sTweaks.apk > /dev/null 2>&1;
 $BB rm -f /system/app/STweaks.apk > /dev/null 2>&1;
@@ -165,7 +165,7 @@ $BB chmod 777 $PROFILE_PATH/default.profile
 # Fix critical perms again
 	CRITICAL_PERM_FIX;
 	
-sleep 2;
+sleep 1;
 
 # script finish here, so let me know when
 rm /data/local/tmp/Imperium_LL_Kernel
