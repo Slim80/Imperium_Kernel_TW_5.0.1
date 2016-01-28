@@ -37,6 +37,9 @@ if [ ! -d /system/etc/init.d ]; then
 	$BB chmod 755 /system/etc/init.d/
 fi
 
+# Set permissions for SU.d
+	$BB chmod 700 /system/su.d/
+
 # Symlink
 if [ ! -e /cpufreq ]; then
 	$BB ln -s /sys/devices/system/cpu/cpu0/cpufreq/ /cpufreq;
