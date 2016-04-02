@@ -8,7 +8,7 @@ export ccache=ccache
 export USE_SEC_FIPS_MODE=true
 export KCONFIG_NOTIMESTAMP=true
 export ENABLE_GRAPHITE=true
-export CROSS_COMPILE=/home/slim80/Scrivania/Kernel/Compilatori/arm-linux-gnueabi-5.3/bin/arm-eabi-
+export CROSS_COMPILE=/home/slim80/Scrivania/Kernel/Compilatori/UBERTC-arm-eabi-5.3/bin/arm-eabi-
 
 KERNELDIR="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel"
 IMAGE="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel/arch/arm/boot"
