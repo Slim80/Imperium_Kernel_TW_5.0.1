@@ -77,13 +77,13 @@ void emulate_domain_manager_switch_mm(
 
 #define set_domain(x) emulate_domain_manager_set(x)
 #else
-#define set_domain(x)					\
-	do {						\
-	__asm__ __volatile__(				\
-	"mcr	p15, 0, %0, c3, c0	@ set domain"	\
-	  : : "r" (x));					\
-	isb();						\
-	} while (0)
+static inline void set_domain(unsigned val)
+{
+	asm volatile(
+	"mcr	p15, 0, %0, c3, c0	@ set domain"
+	  : : "r" (val));
+	isb();
+}
 #endif
 
 #define modify_domain(dom,type)					\
@@ -96,8 +96,8 @@ void emulate_domain_manager_switch_mm(
 	} while (0)
 
 #else
-#define set_domain(x)		do { } while (0)
-#define modify_domain(dom,type)	do { } while (0)
+static inline void set_domain(unsigned val) { }
+static inline void modify_domain(unsigned dom, unsigned type)	{ }
 #endif
 
 /*
