@@ -1,4 +1,4 @@
-#!/sbin/busybox sh
+#!/system/bin/sh
 
 BB=/sbin/busybox
 PROFILE_PATH=/data/.imperium
@@ -21,21 +21,15 @@ $BB chmod 06755 /system/xbin/busybox
 
 sleep 1;
 
-# Run Qualcomm scripts in system/etc folder if exists
-if [ -f /system/etc/init.qcom.post_boot.sh ]; then
-	$BB chmod 755 /system/etc/init.qcom.post_boot.sh;
-	$BB sh /system/etc/init.qcom.post_boot.sh;
-fi;
-
-sleep 1;
-
 OPEN_RW;
 
-# Create init.d folder if missing
-if [ ! -d /system/etc/init.d ]; then
-	$BB mkdir -p /system/etc/init.d/
-	$BB chmod 755 /system/etc/init.d/
-fi
+# Fix init.d folder permissions
+$BB chown -R root.root /system/etc/init.d
+$BB chmod -R 755 /system/etc/init.d
+$BB chmod 755 /system/etc/init.d/*
+
+# Start script in init.d folder
+$BB run-parts /system/etc/init.d/
 
 # Symlink
 if [ ! -e /cpufreq ]; then
