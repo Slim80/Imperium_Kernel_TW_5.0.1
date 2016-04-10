@@ -9,9 +9,6 @@ chmod 644 *.rc
 chmod 750 init*
 chmod 644 fstab*
 chmod 644 default.prop
-chmod 771 data
-chmod 755 dev
-chmod 555 proc
 chmod 750 sbin
 chmod 750 sbin/*
 chmod 0755 sbin/busybox
