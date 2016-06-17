@@ -1,4 +1,4 @@
-CONFIG_LOCALVERSION="-Imperium_LL_Kernel-v4.1"
+CONFIG_LOCALVERSION="-Imperium_LL_Kernel-v4.3"
 # CONFIG_LOCALVERSION_AUTO is not set
 
 # CONFIG_HAVE_END_MEM is not set
