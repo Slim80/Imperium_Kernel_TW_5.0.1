@@ -363,6 +363,7 @@ on post-fs-data
     mkdir /data/app-lib 0771 system system
     mkdir /data/app 0771 system system
     mkdir /data/property 0700 root root
+    mkdir /data/tombstones 0771 system system
 
     # SA, System SW, SAMSUNG 
     # create log directory
@@ -547,6 +548,7 @@ on boot
     chown system radio /sys/class/sec/sec_touchkey/flip_mode
 
 # permission for CHARGING
+	chown media sdcard_rw /sys/class/power_supply/battery/store_mode
 	chown system radio /sys/class/power_supply/battery/batt_reset_soc
 	chown system radio /sys/class/power_supply/battery/update
 	chown system radio /sys/class/power_supply/battery/factory_mode

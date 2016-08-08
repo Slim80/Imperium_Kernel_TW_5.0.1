@@ -112,6 +112,22 @@ qualcomm.bluetooth.             u:object_r:bluetooth_prop:s0
 # avc:  denied  { set } for property=qualcomm.bluetooth.opp scontext=u:r:init_shell:s0 tcontext=u:object_r:default_prop:s0 tclass=property_service
 # avc:  denied  { set } for property=secmm.player.uhqamode scontext=u:r:mediaserver:s0 tcontext=u:object_r:default_prop:s0 tclass=property_service
 
+#line 1 "vendor/samsung/common/sepolicy/marvell_common/property_contexts"
+#
+# property_contexts
+#
+
+
+############ marvell_common #############
+marvell.ril.       u:object_r:rild_prop:s0
+mdc_initial_max_retry       u:object_r:radio_prop:s0
+
+
+
+############ avc_log #############
+# avc:  denied  { set } for property=marvell.ril.ppp.enabled scontext=u:r:marvelltel:s0 tcontext=u:object_r:default_prop:s0 tclass=property_service
+# avc:  denied  { set } for property=mdc_initial_max_retry scontext=u:r:marvelltel:s0 tcontext=u:object_r:default_prop:s0 tclass=property_service
+
 #line 1 "vendor/samsung/common/sepolicy/sprd_common/property_contexts"
 media.                          u:object_r:media_prop:s0
 monitor.	u:object_r:monitor_prop:s0

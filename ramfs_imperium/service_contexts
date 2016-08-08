@@ -140,6 +140,17 @@ wfdservice                                     u:object_r:wfdservice_service:s0
 # SEC removed : DigitalPen                                     u:object_r:usf_service:s0
 dts_eagle_service                              u:object_r:dtseagleservice_service:s0
 wfd.native.mm.service                          u:object_r:wfdservice_service:s0
+#line 1 "vendor/samsung/common/sepolicy/BSP/bsp_marvell/service_contexts"
+# for the binder services
+
+Streaming.Media		u:object_r:mediaserver_service:s0
+ReceiveBootService	u:object_r:system_server_service:s0
+PowerHintService	u:object_r:system_server_service:s0
+#SEC changed: FMRadioService		u:object_r:system_server_service:s0
+FMRadioService		u:object_r:FMRadiod_service:s0
+#SEC changed: codecIPCservice		u:object_r:system_server_service:s0
+codecIPCservice		u:object_r:codecIPC_server_service:s0
+
 #line 1 "vendor/samsung/common/sepolicy/BSP/bsp_sprd/service_contexts"
 atchannel                                 u:object_r:radio_service:s0
 fm                                        u:object_r:mediaserver_service:s0
@@ -224,6 +235,7 @@ device_info                                 u:object_r:system_server_service:s0
 DigitalPen                                  u:object_r:system_server_service:s0
 DirEncryptService                           u:object_r:system_server_service:s0
 download                                    u:object_r:system_server_service:s0
+DPU                                         u:object_r:system_server_service:s0
 dualscreen                                  u:object_r:system_server_service:s0
 edge                                        u:object_r:system_server_service:s0
 emailksproxy                                u:object_r:system_server_service:s0
