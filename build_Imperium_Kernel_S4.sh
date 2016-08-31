@@ -14,7 +14,7 @@ KERNELDIR="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel"
 IMAGE="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel/arch/arm/boot"
 RAMFS="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel/ramfs_imperium"
 BUILDEDKERNEL="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel/1_Imperium"
-VERSION=4.5
+VERSION=4.6
 find -name '*.ko' -exec rm -rf {} \;
 
 rm -rf $KERNELDIR/ramfs_imperium.cpio
