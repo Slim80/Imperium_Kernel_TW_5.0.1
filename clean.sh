@@ -10,10 +10,10 @@ export KCONFIG_NOTIMESTAMP=true
 export ENABLE_GRAPHITE=true
 export CROSS_COMPILE=/home/slim80/Scrivania/Kernel/Compilatori/UBERTC-arm-eabi-5.3/bin/arm-eabi-
 
-KERNELDIR="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel"
-IMAGE="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel/arch/arm/boot"
-RAMFS="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel/ramfs_imperium"
-BUILDEDKERNEL="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel/1_Imperium"
+KERNELDIR="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel"
+IMAGE="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel/arch/arm/boot"
+RAMFS="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel/ramfs_imperium"
+BUILDEDKERNEL="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel/1_Imperium"
 
 rm -f $IMAGE/*.cmd
 rm -f $IMAGE/zImage*.*

@@ -10,11 +10,11 @@ export KCONFIG_NOTIMESTAMP=true
 export ENABLE_GRAPHITE=true
 export CROSS_COMPILE=/home/slim80/Scrivania/Kernel/Compilatori/UBERTC-arm-eabi-5.3/bin/arm-eabi-
 
-KERNELDIR="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel"
-IMAGE="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel/arch/arm/boot"
-RAMFS="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel/ramfs_imperium"
-BUILDEDKERNEL="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel/1_Imperium"
-VERSION=4.6
+KERNELDIR="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel"
+IMAGE="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel/arch/arm/boot"
+RAMFS="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel/ramfs_imperium"
+BUILDEDKERNEL="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel/1_Imperium"
+VERSION=4.7
 find -name '*.ko' -exec rm -rf {} \;
 
 rm -rf $KERNELDIR/ramfs_imperium.cpio
@@ -41,4 +41,4 @@ cd $BUILDEDKERNEL/Builded_Kernel/
 zip -r ../Imperium_LL_Kernel_v$VERSION.zip .
 
 echo "* Done! *"
-echo "* Imperium_Kernel_LL_Kernel_v$VERSION.zip is ready to be flashad *"
+echo "* Imperium Kernel v$VERSION is ready to be flashed *"

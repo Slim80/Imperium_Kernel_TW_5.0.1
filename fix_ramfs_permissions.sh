@@ -1,5 +1,5 @@
 #!/bin/sh
-RAMFS="/home/slim80/Scrivania/Kernel/Samsung/Imperium/Imperium_Kernel/ramfs_imperium"
+RAMFS="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel/ramfs_imperium"
 chmod -R g-w $RAMFS/*
 chmod g-w $RAMFS/*.rc $RAMFS/default.prop $RAMFS/sbin/*.sh
 cd $RAMFS
