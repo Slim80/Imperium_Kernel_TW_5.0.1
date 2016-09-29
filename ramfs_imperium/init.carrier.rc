@@ -70,6 +70,10 @@ on boot
 
 # bluetooth dhcp config
 
+# Permissions for gpio_keys
+    chown system radio /sys/class/sec/sec_key/wakeup_keys
+    write /sys/class/sec/sec_key/wakeup_keys 116,172
+
 # Fingerprint
     mkdir /dev/validity 0770 system system
 
