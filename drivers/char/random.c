@@ -1480,6 +1480,7 @@ unsigned int get_random_int(void)
 
 	return ret;
 }
+EXPORT_SYMBOL(get_random_int);
 
 /*
  * Same as get_random_int(), but returns unsigned long.
