@@ -73,6 +73,20 @@ setprop profiler.force_disable_ulog 1
 setprop ro.ril.disable.power.collapse 0
 setprop persist.service.btui.use_aptx 1
 
+# Stop google service and restart it on boot. This remove high cpu load and ram leak!
+if [ "$($BB pidof com.google.android.gms | wc -l)" -eq "1" ]; then
+	$BB kill "$($BB pidof com.google.android.gms)";
+fi;
+if [ "$($BB pidof com.google.android.gms.unstable | wc -l)" -eq "1" ]; then
+	$BB kill "$($BB pidof com.google.android.gms.unstable)";
+fi;
+if [ "$($BB pidof com.google.android.gms.persistent | wc -l)" -eq "1" ]; then
+	$BB kill "$($BB pidof com.google.android.gms.persistent)";
+fi;
+if [ "$($BB pidof com.google.android.gms.wearable | wc -l)" -eq "1" ]; then
+	$BB kill "$($BB pidof com.google.android.gms.wearable)";
+fi;
+
 # Google Services battery drain fixer by Alcolawl@xda
 # http://forum.xda-developers.com/google-nexus-5/general/script-google-play-services-battery-t3059585/post59563859
 pm enable com.google.android.gms/.update.SystemUpdateActivity
