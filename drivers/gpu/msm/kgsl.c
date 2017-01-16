@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2012,2014, 2016 The Linux Foundation. All rights reserved.
+/* Copyright (c) 2008-2016 The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -380,7 +380,6 @@ kgsl_mem_entry_track_gpuaddr(struct kgsl_process_private *process,
 			ret = -EINVAL;
 			goto done;
 		}
-
 		ret = kgsl_mmu_get_gpuaddr(process->pagetable, &entry->memdesc);
 	}
 
@@ -488,7 +487,6 @@ kgsl_mem_entry_attach_process(struct kgsl_mem_entry *entry,
 		else if (ret != -EAGAIN)
 			goto err_put_proc_priv;
 	}
-
 	entry->priv = process;
 	entry->dev_priv = dev_priv;
 
@@ -2346,6 +2344,7 @@ static long kgsl_ioctl_map_user_mem(struct kgsl_device_private *dev_priv,
 	trace_kgsl_mem_map(entry, param->fd);
 
 	kgsl_mem_entry_commit_process(private, entry);
+
 	return result;
 
 error_attach:
@@ -2561,7 +2560,6 @@ kgsl_ioctl_gpumem_alloc_id(struct kgsl_device_private *dev_priv,
 	param->size = entry->memdesc.size;
 	param->mmapsize = kgsl_memdesc_mmapsize(&entry->memdesc);
 	param->gpuaddr = entry->memdesc.gpuaddr;
-
 	kgsl_mem_entry_commit_process(private, entry);
 	return result;
 err:
@@ -3428,9 +3426,8 @@ int kgsl_device_platform_probe(struct kgsl_device *device)
 	disable_irq(device->pwrctrl.interrupt_num);
 
 	KGSL_DRV_INFO(device,
-		"dev_id %d regs phys 0x%08lx size 0x%08x virt %p\n",
-		device->id, device->reg_phys, device->reg_len,
-		device->reg_virt);
+		"dev_id %d regs phys 0x%08lx size 0x%08x\n",
+		device->id, device->reg_phys, device->reg_len);
 
 	rwlock_init(&device->context_lock);
 

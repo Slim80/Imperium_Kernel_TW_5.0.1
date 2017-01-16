@@ -10,9 +10,9 @@ obj-$(CONFIG_FB_BACKLIGHT) += msm_fb_bl.o
 
 ifeq ($(CONFIG_FB_MSM_MDP_HW),y)
 # MDP
-obj-y += mdp.o
+obj-y += mdp.o xlog.o
 
-obj-$(CONFIG_DEBUG_FS) += mdp_debugfs.o xlog.o
+obj-$(CONFIG_MDP_DEBUG_FS) += mdp_debugfs.o
 obj-$(CONFIG_MDNIE_LITE_TUNING) += mdnie_lite_tuning.o
 
 ifeq ($(CONFIG_FB_MSM_MDP40),y)
