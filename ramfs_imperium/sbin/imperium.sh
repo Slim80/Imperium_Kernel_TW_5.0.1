@@ -67,10 +67,11 @@ CRITICAL_PERM_FIX;
 # Prop tweaks
 setprop persist.adb.notify 0
 setprop persist.service.adb.enable 1
-setprop pm.sleep_mode 1
+setprop debug.performance.tuning 1
+setprop video.accelerate.hw 1 
+setprop persist.sys.ui.hw 1 
 setprop logcat.live disable
 setprop profiler.force_disable_ulog 1
-setprop ro.ril.disable.power.collapse 0
 setprop persist.service.btui.use_aptx 1
 
 # Stop google service and restart it on boot. This remove high cpu load and ram leak!
