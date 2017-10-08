@@ -29,12 +29,10 @@ make -j4
 sh ./fix_ramfs_permissions.sh
 
 cd $RAMFS
-find | fakeroot cpio -H newc -o > $RAMFS.cpio 2>/dev/null
-ls -lh $RAMFS.cpio
-gzip -9 $RAMFS.cpio
+find . | cpio -H newc -o | gzip > $KERNELDIR\ramfs_imperium.cpio.gz
 
 cd $KERNELDIR
-./scripts/mkbootimg --kernel $IMAGE/zImage --ramdisk $RAMFS.cpio.gz --base 0x80200000 --pagesize 2048 --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x00000100 --cmdline 'console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x3F ehci-hcd.park=3' -o $BUILDEDKERNEL/Builded_Kernel/boot.img
+./scripts/mkbootimg --kernel $IMAGE/zImage --ramdisk $KERNELDIR\ramfs_imperium.cpio.gz --base 0x80200000 --pagesize 2048 --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x00000100 --cmdline 'console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x3F ehci-hcd.park=3' -o $BUILDEDKERNEL/Builded_Kernel/boot.img
 
 find -name '*.ko' -exec cp -av {} $BUILDEDKERNEL/Builded_Kernel/system/lib/modules/ \;
 cd $BUILDEDKERNEL/Builded_Kernel/
