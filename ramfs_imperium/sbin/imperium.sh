@@ -11,12 +11,19 @@ OPEN_RW()
 }
 OPEN_RW;
 
-# Installing Busybox
-/system/xbin/busybox --install -s /system/xbin/
-$BB chmod 06755 /system/xbin/busybox
-
 # Fixing ROOT
-/system/xbin/daemonsu --auto-daemon &
+if [ -f /system/priv-app/SuperSU/SuperSU.apk ]; then
+	/system/xbin/daemonsu --auto-daemon &
+fi;
+if [ -f /system/priv-app/Magisk/Magisk.apk ]; then
+	/system/xbin/daemonsu --auto-daemon &
+fi;
+if [ -f /data/app/com.topjohnwu.magisk-1/base.apk ]; then
+	$BB ln -s /sbin/su /system/xbin/su
+fi;
+if [ -f /data/app/com.topjohnwu.magisk-2/base.apk ]; then
+	$BB ln -s /sbin/su /system/xbin/su
+fi;
 
 sleep 1;
 
