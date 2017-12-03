@@ -1,0 +1,21 @@
+
+include/linux/dcache.h:extern int sysctl_vfs_cache_pressure;
+include/linux/sysctl.h:	VM_VFS_CACHE_PRESSURE=26, /* dcache/icache reclaim pressure */
+drivers/gpu/drm/i915/i915_gem.c:		return cnt / 100 * sysctl_vfs_cache_pressure;
+drivers/gpu/drm/i915/i915_gem.c:	return cnt / 100 * sysctl_vfs_cache_pressure;
+net/sunrpc/auth.c:	return (number_cred_unused / 100) * sysctl_vfs_cache_pressure;
+ramfs_imperium/res/customconfig/default.profile:vfs_cache_pressure=100
+ramfs_imperium/res/customconfig/customconfig.xml.generate:		<seekBar description="VFS Cache Pressure. Default: 100%" name="VFS Cache Pressure" action="generic /proc/sys/vm/vfs_cache_pressure" unit="%" min="10" reversed="false" step="10" max="200"/>
+fs/super.c:	total_objects = (total_objects / 100) * sysctl_vfs_cache_pressure;
+fs/quota/dquot.c:		/100) * sysctl_vfs_cache_pressure;
+fs/nfs/dir.c:	return (atomic_long_read(&nfs_access_nr_entries) / 100) * sysctl_vfs_cache_pressure;
+fs/gfs2/quota.c:	return (atomic_read(&qd_lru_count) * sysctl_vfs_cache_pressure) / 100;
+fs/gfs2/glock.c:	return (atomic_read(&lru_count) / 100) * sysctl_vfs_cache_pressure;
+fs/mbcache.c:	return (count / 100) * sysctl_vfs_cache_pressure;
+fs/xfs/xfs_qm.c:	return (qi->qi_lru_count / 100) * sysctl_vfs_cache_pressure;
+fs/dcache.c:int sysctl_vfs_cache_pressure __read_mostly = 100;
+fs/dcache.c:EXPORT_SYMBOL_GPL(sysctl_vfs_cache_pressure);
+kernel/sysctl.c:		.procname	= "vfs_cache_pressure",
+kernel/sysctl.c:		.data		= &sysctl_vfs_cache_pressure,
+kernel/sysctl.c:		.maxlen		= sizeof(sysctl_vfs_cache_pressure),
+kernel/sysctl_binary.c:	{ CTL_INT,	VM_VFS_CACHE_PRESSURE,	"vfs_cache_pressure" },

@@ -613,6 +613,20 @@ service qcom-post-boot /system/xbin/busybox sh /sbin/imperium.sh
     disabled
     oneshot
 
+# Starting init.d scripts
+service sysinit /system/bin/logwrapper /system/xbin/busybox run-parts /system/etc/init.d
+     class late_start
+     user root
+     group root
+     oneshot
+     
+# Starting su.d scripts
+service sysinit /system/bin/logwrapper /system/xbin/busybox run-parts /system/su.d
+     class late_start
+     user root
+     group root
+     oneshot
+
 service wifi-sdio-on /system/bin/sh /system/etc/init.qcom.sdio.sh
     class late_start
     group wifi inet
@@ -693,7 +707,7 @@ service sdcard /system/bin/sdcard -u 1023 -g 1023 -l -r /data/media /mnt/shell/e
 on property:ro.fuse_sdcard=true
     start sdcard
 
-service fuse_extSdCard /system/bin/sdcard -u 1023 -g 1023 -d -f /mnt/media_rw/extSdCard /storage/extSdCard
+service fuse_extSdCard /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d -f /mnt/media_rw/extSdCard /storage/extSdCard
     class late_start
     disabled
     oneshot

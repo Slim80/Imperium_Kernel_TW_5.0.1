@@ -1200,13 +1200,6 @@ service SIDESYNC_service /system/bin/ss_conn_daemon
     socket ss_conn_daemon stream 0666 system system
     user system 
     group inet net_raw
-    
-# Starting init.d scripts
-service sysinit /system/bin/logwrapper /system/xbin/busybox run-parts /system/etc/init.d
-     class late_start
-     user root
-     group shell
-     oneshot
 
 service settings /sbin/settings
     class main
