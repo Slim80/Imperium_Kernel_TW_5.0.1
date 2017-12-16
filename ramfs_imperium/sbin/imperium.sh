@@ -4,38 +4,32 @@ BB=/sbin/busybox
 
 # Mounting partition in RW mode
 
-OPEN_RW()
-{
         $BB mount -o remount,rw /;
         $BB mount -o remount,rw /system;
-}
-OPEN_RW;
 
 # Fixing ROOT
-if [ -f /system/priv-app/SuperSU/SuperSU.apk ]; then
+if [ -e /system/priv-app/SuperSU/SuperSU.apk ]; then
 	/system/xbin/daemonsu --auto-daemon &
 fi;
-if [ -f /system/priv-app/Magisk/Magisk.apk ]; then
-	/system/xbin/daemonsu --auto-daemon &
-fi;
-if [ -f /data/app/com.topjohnwu.magisk-1/base.apk ]; then
-	$BB ln -s /sbin/su /system/xbin/su
-fi;
-if [ -f /data/app/com.topjohnwu.magisk-2/base.apk ]; then
-	$BB ln -s /sbin/su /system/xbin/su
-fi;
+# if [ -e /system/priv-app/Magisk/Magisk.apk ]; then
+#	$BB ln -s /sbin/su /system/xbin/su
+# fi;
+# if [ -e /data/app/com.topjohnwu.magisk-1/base.apk ]; then
+#	$BB ln -s /sbin/su /system/xbin/su
+# fi;
+#if [ -e /data/app/com.topjohnwu.magisk-2/base.apk ]; then
+#	$BB ln -s /sbin/su /system/xbin/su
+# fi;
 
 sleep 1;
 
 # Run Qualcomm scripts in system/etc folder if exists
-if [ -f /system/etc/init.qcom.post_boot.sh ]; then
+if [ -e /system/etc/init.qcom.post_boot.sh ]; then
 	$BB chmod 755 /system/etc/init.qcom.post_boot.sh;
 	$BB sh /system/etc/init.qcom.post_boot.sh;
 fi;
 
 sleep 1;
-
-OPEN_RW;
 
 # Create init.d folder if missing
 if [ ! -d /system/etc/init.d ]; then
@@ -43,32 +37,19 @@ if [ ! -d /system/etc/init.d ]; then
 	$BB chmod 755 /system/etc/init.d
 fi
 
-# Symlink
-if [ ! -e /cpufreq ]; then
-	$BB ln -s /sys/devices/system/cpu/cpu0/cpufreq/ /cpufreq;
-	$BB ln -s /sys/devices/system/cpu/cpufreq/ /cpugov;
-fi;
-
 # Cleaning
 $BB rm -rf /cache/lost+found/* 2> /dev/null;
 $BB rm -rf /data/lost+found/* 2> /dev/null;
 $BB rm -rf /data/tombstones/* 2> /dev/null;
 
-OPEN_RW;
-
-CRITICAL_PERM_FIX()
-{
-	# critical Permissions fix
-	$BB chown -R root:root /tmp;
-	$BB chown -R root:root /res;
-	$BB chown -R root:root /sbin;
-	$BB chown -R root:root /lib;
-	$BB chmod -R 777 /tmp/;
-	$BB chmod -R 775 /res/;
-	$BB chmod 06755 /sbin/busybox;
+# Critical permissions fix
+$BB chown -R root:root /tmp;
+$BB chown -R root:root /sbin;
+$BB chmod -R 777 /tmp/;
+$BB chmod 06755 /sbin/busybox;
+if [ -e /system/xbin/busybox ]; then
 	$BB chmod 06755 /system/xbin/busybox;
-}
-CRITICAL_PERM_FIX;
+fi
 
 # Prop tweaks
 setprop persist.adb.notify 0
@@ -118,29 +99,6 @@ $BB rm -f /system/app/STweaks_Googy-Max.apk > /dev/null 2>&1;
 $BB rm -f /system/app/GTweaks.apk > /dev/null 2>&1;
 $BB rm -f /data/app/com.gokhanmoral.stweaks* > /dev/null 2>&1;
 $BB rm -f /data/data/com.gokhanmoral.stweaks*/* > /dev/null 2>&1;
-
-# Scheduler
-	$BB echo "$int_scheduler" > /sys/block/mmcblk0/queue/scheduler;
-	$BB echo "$int_read_ahead_kb" > /sys/block/mmcblk0/bdi/read_ahead_kb;
-	$BB echo "$ext_scheduler" > /sys/block/mmcblk1/queue/scheduler;
-	$BB echo "$ext_read_ahead_kb" > /sys/block/mmcblk1/bdi/read_ahead_kb;
-
-# CPU
-	$BB echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
-	$BB echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor;
-	$BB echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor;
-	$BB echo "$scaling_governor_cpu0" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor;
-	$BB echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
-	$BB echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
-	$BB echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq;
-	$BB echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq;
-	$BB echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq;
-	$BB echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq;
-	$BB echo "$scaling_max_freq" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq;
-	$BB echo "$scaling_min_freq" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq;
-
-# Fix critical perms again
-	CRITICAL_PERM_FIX;
 	
 sleep 1;
 
