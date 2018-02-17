@@ -445,5 +445,10 @@ strec.service                               u:object_r:mmb_mw_service:s0
 mmbfcmp4mw.player                           u:object_r:mmb_mw_service:s0
 fclicemwserver                              u:object_r:mmb_mw_service:s0
 streccm.service                             u:object_r:mmb_mw_service:s0
+
+# http://mobilerndhub.sec.samsung.net/hub/site/seandroid/board/Request/view/22288535
+# requester: kasthuri.r@samsung.com
+IextSDUFsService.unionFSStackService        u:object_r:sdunion_FSStack_service:s0
+
 # FeliCa
 felica                                      u:object_r:nfc_service:s0

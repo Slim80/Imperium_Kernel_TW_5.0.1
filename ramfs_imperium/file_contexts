@@ -1570,6 +1570,10 @@
 /mnt/securityro(/.*)?	u:object_r:security_firmware:s0
 /mnt/securityrw(/.*)?	u:object_r:security_firmware:s0
 
+# http://mobilerndhub.sec.samsung.net/hub/site/seandroid/board/Request/view/22288535
+# requester: kasthuri.r@samsung.com
+/system/bin/extSdUnionStorage   	u:object_r:sdunion_storage_exec:s0
+
 ############################# 
 # Carrier file of sec_common
 # carrier folder for Sprint(Qualcomm and SLSI)
