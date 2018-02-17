@@ -14,7 +14,8 @@ KERNELDIR="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel"
 IMAGE="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel/arch/arm/boot"
 RAMFS="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel/ramfs_imperium"
 BUILDEDKERNEL="/home/slim80/Scrivania/Kernel/Samsung/Imperium_Kernel/1_Imperium"
-VERSION=5.8
+SIGNAPK="/home/slim80/Scrivania/Kernel/SignApk"
+VERSION=5.9
 find -name '*.ko' -exec rm -rf {} \;
 
 rm -rf $KERNELDIR/ramfs_imperium.cpio
@@ -36,7 +37,11 @@ cd $KERNELDIR
 
 find -name '*.ko' -exec cp -av {} $BUILDEDKERNEL/Builded_Kernel/system/lib/modules/ \;
 cd $BUILDEDKERNEL/Builded_Kernel/
-zip -r ../Imperium_LL_Kernel_v$VERSION.zip .
+zip -r ../Imperium_LL_Kernel_unsigned_v$VERSION.zip .
+
+cd $SIGNAPK
+java -jar signapk.jar testkey.x509.pem testkey.pk8 $BUILDEDKERNEL/Imperium_LL_Kernel_unsigned_v$VERSION.zip $BUILDEDKERNEL/Imperium_LL_Kernel_v$VERSION.zip
+rm -rf $BUILDEDKERNEL/Imperium_LL_Kernel_unsigned_v*
 
 echo "* Done! *"
 echo "* Imperium Kernel v$VERSION is ready to be flashed *"
