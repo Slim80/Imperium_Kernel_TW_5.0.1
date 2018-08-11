@@ -193,10 +193,6 @@ static ssize_t tuning_show(struct device *dev,
 static ssize_t tuning_store(struct device *dev,
 		struct device_attribute *attr, const char *buf, size_t size)
 {
-
-	if (buf == NULL || strchr(buf, '.') || strchr(buf, '/'))
-		return size;
-
 	memset(tuning_filename, 0, sizeof(tuning_filename));
 	sprintf(tuning_filename, "%s%s", TUNING_FILE_PATH, buf);
 

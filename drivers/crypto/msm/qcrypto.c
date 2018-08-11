@@ -2593,7 +2593,6 @@ static int _sha1_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
 							unsigned int len)
 {
 	struct qcrypto_sha_ctx *sha_ctx = crypto_tfm_ctx(&tfm->base);
-	int ret = 0;
 
 	if (len <= SHA1_BLOCK_SIZE)
 		memcpy(&sha_ctx->authkey[0], key, len);
@@ -2603,18 +2602,15 @@ static int _sha1_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
 		memcpy(&sha_ctx->digest[0], &_std_init_vector_sha1_uint8[0],
 						SHA1_DIGEST_SIZE);
 		sha_ctx->diglen = SHA1_DIGEST_SIZE;
-		ret = _sha_hmac_setkey(tfm, key, len);
-		if (ret)
-			pr_err("SHA1 hmac setkey failed\n");
+		_sha_hmac_setkey(tfm, key, len);
 	}
-	return ret;
+	return 0;
 }
 
 static int _sha256_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
 							unsigned int len)
 {
 	struct qcrypto_sha_ctx *sha_ctx = crypto_tfm_ctx(&tfm->base);
-	int ret = 0;
 
 	if (len <= SHA256_BLOCK_SIZE)
 		memcpy(&sha_ctx->authkey[0], key, len);
@@ -2624,12 +2620,10 @@ static int _sha256_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
 		memcpy(&sha_ctx->digest[0], &_std_init_vector_sha256_uint8[0],
 						SHA256_DIGEST_SIZE);
 		sha_ctx->diglen = SHA256_DIGEST_SIZE;
-		ret = _sha_hmac_setkey(tfm, key, len);
-		if (ret)
-			pr_err("SHA256 hmac setkey failed\n");
+		_sha_hmac_setkey(tfm, key, len);
 	}
 
-	return ret;
+	return 0;
 }
 
 static int _sha_hmac_init_ihash(struct ahash_request *req,
@@ -3545,8 +3539,7 @@ static ssize_t _debug_stats_read(struct file *file, char __user *buf,
 
 	len = _disp_stats(qcrypto);
 
-	if (len <= count)
-      rc = simple_read_from_buffer((void __user *) buf, len,
+	rc = simple_read_from_buffer((void __user *) buf, len,
 			ppos, (void *) _debug_read_buf, len);
 
 	return rc;
